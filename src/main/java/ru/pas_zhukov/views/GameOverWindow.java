@@ -25,6 +25,7 @@ public class GameOverWindow extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 GameOverWindow.super.dispose();
+                thread.interrupt();
                 new Game().start();
             }
         });

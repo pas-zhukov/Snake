@@ -8,6 +8,7 @@ import ru.pas_zhukov.views.GameOverWindow;
 import ru.pas_zhukov.views.GameWindow;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game extends Thread implements Runnable {
     private final GameWindow gameWindow;
@@ -19,7 +20,7 @@ public class Game extends Thread implements Runnable {
     public Game() {
         field = new Field(20, 20);
         snake = new Snake(field);
-        mouse = new Mouse(field);
+        mouse = new Mouse(getRandomPosition());
         gameWindow = new GameWindow(field, snake, mouse);
     }
 
@@ -42,17 +43,18 @@ public class Game extends Thread implements Runnable {
         // проверяем не съедена ли мышка
         if (snakeCoords.get(0).equals(mouse.getCoordinates())) {
             snake.grow();
-            mouse.randomReplace(field, snake);
+            respawnMouse();
             score++;
         }
-        boolean gameOver = false;
+
+        boolean eatYourself = false;
         // проверяем не врезались ли в себя
         for (int i = 1; i < snakeCoords.size(); i++) {
-            if (snakeCoords.get(0).equals(snakeCoords.get(i))) gameOver = true;
+            if (snakeCoords.get(0).equals(snakeCoords.get(i))) eatYourself = true;
         }
 
         boolean wallTouched = isWallTouched(snakeCoords);
-        if (gameOver | wallTouched) {
+        if (eatYourself | wallTouched) {
             new GameOverWindow(gameWindow, score, this);
         }
 
@@ -73,5 +75,24 @@ public class Game extends Thread implements Runnable {
             }
         }
         return false;
+    }
+
+    public void respawnMouse() {
+        boolean mousePositionFlag;
+        Coordinates randCoords;
+        do {
+            mousePositionFlag = true;
+            randCoords = getRandomPosition();
+            for (Coordinates coords : snake.getCoordinates()) {
+                if (randCoords.equals(coords)) mousePositionFlag = false;
+            }
+        } while (!mousePositionFlag);
+        mouse.setCoordinates(randCoords);
+    }
+
+    private Coordinates getRandomPosition() {
+        int randX = ThreadLocalRandom.current().nextInt(1, field.width - 1);
+        int randY = ThreadLocalRandom.current().nextInt(1, field.height - 1);
+        return new Coordinates(randX, randY);
     }
 }
