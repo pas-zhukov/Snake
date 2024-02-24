@@ -10,3 +10,5 @@
 ```shell
 java -jar .\Snake-fast.jar
 ```
+
+*Для управления используются клавиши WAS*
