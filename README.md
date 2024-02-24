@@ -12,3 +12,7 @@ java -jar .\Snake.jar
 ```
 
 **Для управления используются клавиши WASD**
+
+## Как это выглядит
+
+![snake](https://github.com/pas-zhukov/Snake/assets/117192371/200872be-e0d8-439e-85aa-a06b16edf8f9)
