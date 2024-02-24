@@ -1,7 +1,6 @@
 package ru.pas_zhukov.views;
 
 import ru.pas_zhukov.Game;
-import ru.pas_zhukov.exceptions.NewGameException;
 
 import javax.swing.*;
 import java.awt.*;

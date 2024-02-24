@@ -26,7 +26,7 @@ public class Snake{
     public void move() {
         hiddenTail = coordinates.get(coordinates.size() - 1).getCopy();
         for (int i = getSize() - 1; i > 0; i--) {
-            coordinates.set(i, coordinates.get(i - 1).getCopy());
+            coordinates.get(i).setNewCoords(coordinates.get(i - 1));
         }
 
         if (movingDirection == Direction.UP) {

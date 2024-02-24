@@ -1,6 +1,5 @@
 package ru.pas_zhukov;
 
-import ru.pas_zhukov.exceptions.NewGameException;
 import ru.pas_zhukov.models.Coordinates;
 import ru.pas_zhukov.models.Field;
 import ru.pas_zhukov.models.Mouse;

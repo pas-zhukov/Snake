@@ -43,6 +43,10 @@ public class Coordinates {
         x = 0;
         y = 0;
     }
+    public void setNewCoords(Coordinates newCoords) {
+        this.x = newCoords.getX();
+        this.y = newCoords.getY();
+    }
 
     public Coordinates getCopy() {
         return new Coordinates(x, y);
