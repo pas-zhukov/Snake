@@ -8,7 +8,7 @@
 3. Запустить игру командой:
 
 ```shell
-java -jar .\Snake-fast.jar
+java -jar .\Snake.jar
 ```
 
 **Для управления используются клавиши WASD**
