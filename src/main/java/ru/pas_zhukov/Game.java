@@ -45,6 +45,7 @@ public class Game extends Thread implements Runnable {
             snake.grow();
             respawnMouse();
             score++;
+            return;
         }
 
         boolean eatYourself = false;
