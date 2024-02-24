@@ -46,9 +46,10 @@ public class GameWindow extends JFrame {
             public void keyPressed(KeyEvent e) {
                 Direction directionToBeUsed = null;
                 if (e.getKeyCode()==KeyEvent.VK_W) directionToBeUsed = Direction.UP;
-                if (e.getKeyCode()==KeyEvent.VK_S) directionToBeUsed = Direction.DOWN;
-                if (e.getKeyCode()==KeyEvent.VK_A) directionToBeUsed = Direction.LEFT;
-                if (e.getKeyCode()==KeyEvent.VK_D) directionToBeUsed = Direction.RIGHT;
+                else if (e.getKeyCode()==KeyEvent.VK_S) directionToBeUsed = Direction.DOWN;
+                else if (e.getKeyCode()==KeyEvent.VK_A) directionToBeUsed = Direction.LEFT;
+                else if (e.getKeyCode()==KeyEvent.VK_D) directionToBeUsed = Direction.RIGHT;
+                else return;
 
                 if (snake.getDirection() == Direction.UP & directionToBeUsed == Direction.DOWN) {
                     directionToBeUsed = Direction.UP;
