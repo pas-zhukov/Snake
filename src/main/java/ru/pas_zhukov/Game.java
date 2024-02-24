@@ -27,7 +27,7 @@ public class Game extends Thread implements Runnable {
     public void run() {
         while (true) {
             try {
-                sleep(200);
+                sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -50,6 +50,7 @@ public class Game extends Thread implements Runnable {
         for (int i = 1; i < snakeCoords.size(); i++) {
             if (snakeCoords.get(0).equals(snakeCoords.get(i))) gameOver = true;
         }
+
         boolean wallTouched = isWallTouched(snakeCoords);
         if (gameOver | wallTouched) {
             new GameOverWindow(gameWindow, score);

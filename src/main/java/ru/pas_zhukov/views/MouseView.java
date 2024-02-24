@@ -1,7 +1,6 @@
 package ru.pas_zhukov.views;
 
 import ru.pas_zhukov.models.Mouse;
-import ru.pas_zhukov.models.Snake;
 
 import javax.swing.*;
 import java.awt.*;

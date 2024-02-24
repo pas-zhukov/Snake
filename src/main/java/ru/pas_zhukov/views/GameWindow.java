@@ -40,6 +40,7 @@ public class GameWindow extends JFrame {
         this.drawWalls(field);
 
         // контроллер...
+        // стремноватый вышел, но а что поделать
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
