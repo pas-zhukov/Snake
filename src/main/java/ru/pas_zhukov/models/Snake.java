@@ -6,13 +6,14 @@ import java.util.List;
 public class Snake{
     private List<Coordinates> coordinates;
     private Direction movingDirection;
-
+    private Coordinates hiddenTail;
     public Snake(Field field) {
         movingDirection = Direction.UP;
         coordinates = new ArrayList<>();
         coordinates.add(new Coordinates((int)field.getWidth() / 2, (int) field.getHeight() / 2));
         coordinates.add(new Coordinates((int)field.getWidth() / 2, ((int) field.getHeight() / 2) + 1));
         coordinates.add(new Coordinates((int)field.getWidth() / 2, ((int) field.getHeight() / 2) + 2));
+        hiddenTail = coordinates.get(coordinates.size() - 1).getCopy();
     }
     public List<Coordinates> getCoordinates() {
         return coordinates;
@@ -22,6 +23,7 @@ public class Snake{
     }
 
     public void move() {
+        hiddenTail.setNewCoords(coordinates.get(coordinates.size() - 1));
         for (int i = getSize() - 1; i > 0; i--) {
             coordinates.get(i).setNewCoords(coordinates.get(i - 1));
         }
@@ -46,9 +48,7 @@ public class Snake{
     }
 
     public void grow() {
-        Coordinates oldHeadCoords = coordinates.get(0).getCopy();
-        moveHead();
-        coordinates.add(1, oldHeadCoords);
+        coordinates.add(hiddenTail.getCopy());
     }
 
     public int getSize() {
