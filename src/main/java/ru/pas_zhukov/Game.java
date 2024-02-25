@@ -27,6 +27,9 @@ public class Game extends Thread implements Runnable {
     @Override
     public void run() {
         while (true) {
+            if (interrupted()) {
+                break;
+            }
             try {
                 sleep(100);
             } catch (InterruptedException e) {
