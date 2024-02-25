@@ -20,14 +20,11 @@ public class GameOverWindow extends JDialog {
         JButton button = new JButton("Выход");
         JButton newGameBtn = new JButton("Новая игра");
         button.addActionListener(e -> System.exit(0));
-        newGameBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                GameOverWindow.super.dispose();
-                thread.interrupt();
-                new Game().start();
-            }
+        newGameBtn.addActionListener(e -> {
+            frame.dispose();
+            this.dispose();
+            thread.interrupt();
+            new Game().start();
         });
         this.add(button);
         this.add(newGameBtn);

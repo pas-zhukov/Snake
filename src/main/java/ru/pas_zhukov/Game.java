@@ -26,29 +26,28 @@ public class Game extends Thread implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            if (interrupted()) {
-                break;
-            }
+        while (!interrupted()) {
             try {
                 sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             snake.move();
-            checkGameStatus();
+            if (!checkGameStatus()) {
+                break;
+            }
             gameWindow.refreshWindow();
         }
     }
 
-    private void checkGameStatus() {
+    private boolean checkGameStatus() {
         List<Coordinates> snakeCoords = snake.getCoordinates();
         // проверяем не съедена ли мышка
         if (snakeCoords.get(0).equals(mouse.getCoordinates())) {
             snake.grow();
             respawnMouse();
             score++;
-            return;
+            return true;
         }
 
         boolean eatYourself = false;
@@ -60,9 +59,9 @@ public class Game extends Thread implements Runnable {
         boolean wallTouched = isWallTouched(snakeCoords);
         if (eatYourself | wallTouched) {
             new GameOverWindow(gameWindow, score, this);
+            return false;
         }
-
-
+        return true;
     }
 
     private boolean isWallTouched(List<Coordinates> snakeCoords) {
