@@ -1,5 +1,6 @@
 package ru.pas_zhukov;
 
+import ru.pas_zhukov.exceptions.GameOverException;
 import ru.pas_zhukov.models.Coordinates;
 import ru.pas_zhukov.models.Field;
 import ru.pas_zhukov.models.Mouse;
@@ -29,25 +30,24 @@ public class Game extends Thread implements Runnable {
         while (!interrupted()) {
             try {
                 sleep(100);
+                snake.move();
+                checkGameStatus();
+                gameWindow.refreshWindow();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
-            }
-            snake.move();
-            if (!checkGameStatus()) {
+            } catch (GameOverException e) {
                 break;
             }
-            gameWindow.refreshWindow();
         }
     }
 
-    private boolean checkGameStatus() {
+    private void checkGameStatus() throws GameOverException {
         List<Coordinates> snakeCoords = snake.getCoordinates();
         // проверяем не съедена ли мышка
         if (snakeCoords.get(0).equals(mouse.getCoordinates())) {
             snake.grow();
             respawnMouse();
             score++;
-            return true;
         }
 
         boolean eatYourself = false;
@@ -59,9 +59,8 @@ public class Game extends Thread implements Runnable {
         boolean wallTouched = isWallTouched(snakeCoords);
         if (eatYourself | wallTouched) {
             new GameOverWindow(gameWindow, score, this);
-            return false;
+            throw new GameOverException();
         }
-        return true;
     }
 
     private boolean isWallTouched(List<Coordinates> snakeCoords) {
