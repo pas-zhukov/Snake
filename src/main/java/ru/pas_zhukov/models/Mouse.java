@@ -5,6 +5,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Mouse {
     private Coordinates coordinates;
 
+    public Mouse() {
+        this.coordinates = new Coordinates(0, 0);
+    }
     public Mouse(Coordinates coords) {
         this.coordinates = coords;
     }

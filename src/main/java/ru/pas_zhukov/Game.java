@@ -30,7 +30,8 @@ public class Game extends Thread implements Runnable {
     public Game(Field field) {
         this.field = field;
         snake = new Snake(field);
-        mouse = new Mouse(getRandomPosition());
+        mouse = new Mouse();
+        respawnMouse();
         gameWindow = new GameWindow(field, snake, mouse);
     }
 
@@ -91,7 +92,16 @@ public class Game extends Thread implements Runnable {
             mousePositionFlag = true;
             randCoords = getRandomPosition();
             for (Coordinates coords : snake.getCoordinates()) {
-                if (randCoords.equals(coords)) mousePositionFlag = false;
+                if (randCoords.equals(coords)) {
+                    mousePositionFlag = false;
+                    break;
+                }
+            }
+            for (Coordinates coords : field.getWalls()) {
+                if (randCoords.equals(coords)) {
+                    mousePositionFlag = false;
+                    break;
+                }
             }
         } while (!mousePositionFlag);
         mouse.setCoordinates(randCoords);

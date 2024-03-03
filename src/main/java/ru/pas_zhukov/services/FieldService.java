@@ -12,9 +12,14 @@ public class FieldService {
         field.addWall(new Coordinates(10, 10));
         field.addWall(new Coordinates(10, 11));
         field.addWall(new Coordinates(10, 12));
+        field.addWall(new Coordinates(10, 13));
+        field.addWall(new Coordinates(10, 14));
+        field.addWall(new Coordinates(10, 15));
+        field.addWall(new Coordinates(10, 16));
+        field.addWall(new Coordinates(10, 17));
 
         try {
-            new FieldService(field).saveAsFile(new File("./testmap.bmap"));
+            new FieldService(field).saveAsFile(new File("./testCustomMap.bmap"));
         } catch (IOException ignored) {
             System.out.println("Не удалось создать тестовую карту");
         }
