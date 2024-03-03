@@ -16,7 +16,7 @@ public class MouseView {
         this.mouse = mouse;
     }
     public void drawMouse() {
-        GridBagConstraints constraints = new CustomGridConstraints(mouse.getX(), mouse.getY());
+        GridBagConstraints constraints = new GameGridConstraints(mouse.getX(), mouse.getY());
         gamePanel.add(mouseLabel, constraints);
     }
 }

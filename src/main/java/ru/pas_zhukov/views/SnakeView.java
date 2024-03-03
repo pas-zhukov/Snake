@@ -8,7 +8,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class SnakeView {
@@ -29,7 +28,7 @@ public class SnakeView {
             }
         }
         List<Coordinates> snakeCoords = snake.getCoordinates();
-        List<GridBagConstraints> snakeConstraints = snakeCoords.stream().map((s) -> new CustomGridConstraints(s.getX(), s.getY())).collect(Collectors.toList());
+        List<GridBagConstraints> snakeConstraints = snakeCoords.stream().map((s) -> new GameGridConstraints(s.getX(), s.getY())).collect(Collectors.toList());
         for (int i = 1; i < snake.getSize(); i++) {
             gamePanel.add(snakeTail.get(i), snakeConstraints.get(i));
         }

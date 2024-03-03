@@ -4,8 +4,8 @@ import ru.pas_zhukov.models.Coordinates;
 
 import java.awt.*;
 
-public class CustomGridConstraints extends GridBagConstraints {
-    public CustomGridConstraints(int x_position, int y_position) {
+public class GameGridConstraints extends GridBagConstraints {
+    public GameGridConstraints(int x_position, int y_position) {
         super();
         this.anchor = CENTER;
         this.gridx = x_position;
@@ -17,7 +17,7 @@ public class CustomGridConstraints extends GridBagConstraints {
         this.insets = new Insets(0, 0, 0, 0);
     }
 
-    public CustomGridConstraints(Coordinates coordinates) {
+    public GameGridConstraints(Coordinates coordinates) {
         this(coordinates.getX(), coordinates.getY());
     }
 }

@@ -1,25 +1,34 @@
 package ru.pas_zhukov;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.pas_zhukov.exceptions.GameOverException;
 import ru.pas_zhukov.models.Coordinates;
 import ru.pas_zhukov.models.Field;
 import ru.pas_zhukov.models.Mouse;
 import ru.pas_zhukov.models.Snake;
+import ru.pas_zhukov.services.ScoreFileService;
 import ru.pas_zhukov.views.GameOverWindow;
 import ru.pas_zhukov.views.GameWindow;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Game extends Thread implements Runnable {
+    public static Logger logger = LoggerFactory.getLogger(Game.class);
     private final GameWindow gameWindow;
-    private final Field field;
+    private Field field;
     private final Snake snake;
     private final Mouse mouse;
     private int score = 0;
 
     public Game() {
-        field = new Field(20, 20);
+        this(new Field(20, 20));
+    }
+
+    public Game(Field field) {
+        this.field = field;
         snake = new Snake(field);
         mouse = new Mouse(getRandomPosition());
         gameWindow = new GameWindow(field, snake, mouse);
@@ -48,7 +57,12 @@ public class Game extends Thread implements Runnable {
             score++;
         }
         if (isEatenByYourself() | isWallTouched()) {
-            new GameOverWindow(gameWindow, score, this);
+            new GameOverWindow(this, gameWindow, score, this);
+            try {
+                if (score > ScoreFileService.getMaxScore()) ScoreFileService.saveMaxScore(score);
+            } catch (IOException e) {
+                logger.warn("Could not save max score to file");
+            }
             throw new GameOverException();
         }
     }
@@ -87,5 +101,9 @@ public class Game extends Thread implements Runnable {
         int randX = ThreadLocalRandom.current().nextInt(1, field.width - 1);
         int randY = ThreadLocalRandom.current().nextInt(1, field.height - 1);
         return new Coordinates(randX, randY);
+    }
+
+    public Field getField() {
+        return field;
     }
 }

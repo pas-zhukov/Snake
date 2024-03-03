@@ -26,7 +26,7 @@ public class FieldView {
     }
 
     public void drawWall(Coordinates coordinates) {
-        GridBagConstraints constraints = new CustomGridConstraints(coordinates);
+        GridBagConstraints constraints = new GameGridConstraints(coordinates);
         JLabel wallPart = new JLabel(wallPartImageIcon);
         gamePanel.add(wallPart, constraints);
     }

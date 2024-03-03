@@ -1,11 +1,12 @@
 package ru.pas_zhukov.models;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Field extends Dimension {
+public class Field extends Dimension implements Serializable {
     private final Set<Coordinates> walls = new HashSet<>();
     public Field(int width, int height) {
         super(width, height);
@@ -30,5 +31,13 @@ public class Field extends Dimension {
 
     public Set<Coordinates> getWalls() {
         return walls;
+    }
+
+    public void addWall(Coordinates wallCoordinates) {
+        walls.add(wallCoordinates);
+    }
+
+    public void removeWall(Coordinates wallCoordinates) {
+        walls.remove(wallCoordinates);
     }
 }
