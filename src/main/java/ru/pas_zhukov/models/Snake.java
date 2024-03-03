@@ -18,6 +18,9 @@ public class Snake{
     public List<Coordinates> getCoordinates() {
         return coordinates;
     }
+    public Coordinates getHeadCoordinates() {
+        return coordinates.get(0);
+    }
     public void changeDirection(Direction direction) {
         movingDirection = direction;
     }

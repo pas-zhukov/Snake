@@ -1,5 +1,7 @@
 package ru.pas_zhukov.views;
 
+import ru.pas_zhukov.models.Coordinates;
+
 import java.awt.*;
 
 public class CustomGridConstraints extends GridBagConstraints {
@@ -13,5 +15,9 @@ public class CustomGridConstraints extends GridBagConstraints {
         this.gridwidth = 1;
         this.gridheight = 1;
         this.insets = new Insets(0, 0, 0, 0);
+    }
+
+    public CustomGridConstraints(Coordinates coordinates) {
+        this(coordinates.getX(), coordinates.getY());
     }
 }

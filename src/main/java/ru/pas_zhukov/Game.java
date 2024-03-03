@@ -42,39 +42,30 @@ public class Game extends Thread implements Runnable {
     }
 
     private void checkGameStatus() throws GameOverException {
-        List<Coordinates> snakeCoords = snake.getCoordinates();
-        // проверяем не съедена ли мышка
-        if (snakeCoords.get(0).equals(mouse.getCoordinates())) {
+        if (isMouseEaten()) {
             snake.grow();
             respawnMouse();
             score++;
         }
-
-        boolean eatYourself = false;
-        // проверяем не врезались ли в себя
-        for (int i = 1; i < snakeCoords.size(); i++) {
-            if (snakeCoords.get(0).equals(snakeCoords.get(i))) eatYourself = true;
-        }
-
-        boolean wallTouched = isWallTouched(snakeCoords);
-        if (eatYourself | wallTouched) {
+        if (isEatenByYourself() | isWallTouched()) {
             new GameOverWindow(gameWindow, score, this);
             throw new GameOverException();
         }
     }
 
-    private boolean isWallTouched(List<Coordinates> snakeCoords) {
-        int width = (int) field.getWidth();
-        int height = (int) field.getHeight();
+    private boolean isMouseEaten() {
+        return snake.getHeadCoordinates().equals(mouse.getCoordinates());
+    }
 
-        for (int row = 0; row < height; row ++) {
-            for (int column = 0; column < width; column++) {
-                if (column == 0 | row == 0) {
-                    if (snakeCoords.get(0).equals(new Coordinates(row, column))) return true;
-                } else if (column == height - 1 | row == width - 1) {
-                    if (snakeCoords.get(0).equals(new Coordinates(row, column))) return true;
-                }
-            }
+    private boolean isWallTouched() {
+        return field.getWalls().contains(snake.getHeadCoordinates());
+    }
+
+    private boolean isEatenByYourself() {
+        List<Coordinates> snakeCoords = snake.getCoordinates();
+        Coordinates headCoordinates = snake.getHeadCoordinates();
+        for (int i = 1; i < snakeCoords.size(); i++) {
+            if (snakeCoords.get(i).equals(headCoordinates)) return true;
         }
         return false;
     }
